@@ -23,3 +23,38 @@ POST /api/product
 
 ```
 
+
+
+ProducerService.java
+
+
+```java
+
+ public void sendProductMessage(String id) {
+        Map<String, String> actionmap = new HashMap<>();
+        actionmap.put("id", id);
+        log.info("Sending the index request through queue message");
+        rabbitTemplate.convertAndSend(SpringBootApplication.SFG_MESSAGE_QUEUE, actionmap);
+    }
+    
+```
+
+
+
+MessageListener
+
+
+```java
+
+  public void receiveMessage(Product product) {
+       // .getClass().log.info("Received <" + message + ">");
+        String productname =  product.getProduct();
+        System.out.println("product >>> "+productname);
+        log.info("Message processed...");
+    }
+    
+```
+
+
+
+
